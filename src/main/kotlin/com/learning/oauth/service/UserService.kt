@@ -1,7 +1,9 @@
 package com.learning.oauth.service
 
-import com.learning.oauth.repository.UserRepository
+import com.learning.oauth.dto.user.CreateUserDto
 import com.learning.oauth.entity.User
+import com.learning.oauth.repository.UserRepository
+import jakarta.persistence.EntityNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -10,11 +12,21 @@ import org.springframework.transaction.annotation.Transactional
 class UserService(
     private val userRepository: UserRepository,
 ) {
-    fun getUser(id: Long): User? {
-        return userRepository.findById(id).orElse(null)
+    fun saveUser(user: CreateUserDto): User {
+        val userEntity = User(name = user.name, email = user.email)
+        return userRepository.save(userEntity)
     }
 
-    fun saveUser(user: User): User {
-        return userRepository.save(user)
+    fun getAllUsers(): List<User> {
+        return userRepository.findAll()
+    }
+
+    fun getUser(id: Long): User {
+        val user = userRepository.findById(id)
+        if (!user.isPresent) {
+            throw EntityNotFoundException("User with id $id not found")
+        } else {
+            return user.get()
+        }
     }
 }
