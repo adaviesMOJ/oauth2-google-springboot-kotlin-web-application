@@ -9,6 +9,12 @@ It will contain a fully working RESTful API which utilises the following tech:
 - Docker and docker-compose (for building and running locally)
 - more... (eventually correct storing and configuring of env vars, deployment, swagger docs and more)
 
+## Running Application
+1. run the database container using command 
+`docker-compose -f docker-compose-db.yml up -d`.
+2. In intellij, run the spring boot application using default run configuration.
+3. Navigate to `localhost:3939/`.
+
 ## Change Log
 
 ### Stage 1 - Initialising basic spring security

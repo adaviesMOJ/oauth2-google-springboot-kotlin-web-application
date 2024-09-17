@@ -21,9 +21,15 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:mysql://localhost:5959/learningDb
+    url: jdbc:postgresql://localhost:5959/learningDb
     password: password
-    username: username
+    username: postgres
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          public-key-location: classpath:authz.pub
 
 server:
   port: 3939
