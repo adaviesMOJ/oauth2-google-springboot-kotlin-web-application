@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15.0
+    container_name: postgres_container
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: learningDb
+    ports:
+      - "5959:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - springboot-network
+
+  springboot-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: springboot_app_container
+    ports:
+      - "3939:3939"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/learningDb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    networks:
+      - springboot-network
+
+networks:
+  springboot-network:
+
+volumes:
+  pgdata:

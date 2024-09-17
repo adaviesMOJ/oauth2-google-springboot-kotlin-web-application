@@ -1,0 +1,39 @@
+info.app:
+  name: Oauth2 Learning
+  version: 1.0
+  description: API demo project with oauth2
+
+spring:
+  application:
+    name: oauth
+  codec:
+    max-in-memory-size: 10MB
+
+  jpa:
+    open-in-view: false
+    show-sql: false
+    generate-ddl: false
+    hibernate:
+      ddl-auto: update
+
+  flyway:
+    enabled: true
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:mysql://localhost:5959/learningDb
+    password: password
+    username: username
+
+server:
+  port: 3939
+  servlet:
+    context-path: /
+  forward-headers-strategy: native
+  shutdown: graceful
+  error:
+    include-message: always
+
+logging:
+  level:
+    org.springframework.security: INFO
