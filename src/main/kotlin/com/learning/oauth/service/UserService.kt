@@ -29,4 +29,13 @@ class UserService(
             return user.get()
         }
     }
+
+    fun getUserByUsername(username: String): UserEntity {
+        val user = userRepository.findByUsername(username)
+        if (!user.isPresent) {
+            throw EntityNotFoundException("User with email $username not found")
+        } else {
+            return user.get()
+        }
+    }
 }

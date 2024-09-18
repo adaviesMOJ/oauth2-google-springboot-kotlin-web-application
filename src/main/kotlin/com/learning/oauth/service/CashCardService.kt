@@ -22,8 +22,12 @@ class CashCardService(
         }
     }
 
+    fun getAllCashCards(username: String): List<CashCardEntity> {
+        return cashCardRepository.findAllCashCardsByUsername(username)
+    }
+
     fun saveCashCard(cashCard: CreateCashCardDto): CashCardEntity {
-        val user = userService.getUser(cashCard.userId)
+        val user = userService.getUserByUsername(cashCard.username)
 
         val cashCardEntity = CashCardEntity(amount = cashCard.amount, user = user)
 

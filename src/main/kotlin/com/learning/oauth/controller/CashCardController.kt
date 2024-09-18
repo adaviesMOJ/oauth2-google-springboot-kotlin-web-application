@@ -2,8 +2,11 @@ package com.learning.oauth.controller
 
 import com.learning.oauth.dto.cashcard.CashCardDto
 import com.learning.oauth.dto.cashcard.CreateCashCardDto
+import com.learning.oauth.entity.CashCardEntity
 import com.learning.oauth.service.CashCardService
 import org.springframework.http.MediaType
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.annotation.CurrentSecurityContext
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -22,6 +25,12 @@ class CashCardController(
     @PostMapping
     fun saveCashCard(@RequestBody cashCard: CreateCashCardDto): CashCardDto {
         return CashCardDto(cashCardService.saveCashCard(cashCard))
+    }
+
+    @GetMapping
+    fun getAllCashCardsForUser(@CurrentSecurityContext(expression = "authentication.name") username: String): List<CashCardDto> {
+        return cashCardService.getAllCashCards(username)
+            .map { cashCard: CashCardEntity -> CashCardDto(cashCard) }
     }
 
     @GetMapping(GET_CASHCARD_BY_ID)

@@ -1,19 +1,19 @@
 -- add_dummy_data_to_tables.sql
 
 -- Add users
-INSERT INTO users (name, email) VALUES
-('John Doe', 'john.doe@example.com'),
-('Jane Doe', 'jane.doe@example.com'),
-('Alice Smith', 'alice.smith@example.com'),
-('Bob Johnson', 'bob.johnson@example.com');
+INSERT INTO users (name, email, username) VALUES
+('John Doe', 'john.doe@example.com', 'john1'),
+('Sarah Doe', 'jane.doe@example.com', 'sarah1'),
+('Alice Smith', 'alice.smith@example.com', 'alice1'),
+('Bob Johnson', 'bob.johnson@example.com', 'bob1');
 
 -- Add cashcards
-INSERT INTO cashcards (amount, user_id) VALUES
-(1000, 1),
-(1500, 1),
-(2000, 2),
-(2500, 2),
-(3000, 3),
-(3500, 3),
-(4000, 4),
-(4500, 4);
+INSERT INTO cashcards (amount, username) VALUES
+(1000, 'john1'),
+(1500, 'john1'),
+(2000, 'sarah1'),
+(2500, 'sarah1'),
+(3000, 'alice1'),
+(3500, 'alice1'),
+(4000, 'bob1'),
+(4500, 'bob1');

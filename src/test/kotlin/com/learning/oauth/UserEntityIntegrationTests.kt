@@ -23,19 +23,19 @@ class UserEntityIntegrationTests : IntegrationTestBase() {
 
     @Test
     fun shouldReturnAUserWhenRequested() {
-        val tempUserId =  entityDataHelper.createUser(UserEntity(email = "test@test.test", name = "Test User")).id
+        val tempUserId =  entityDataHelper.createUser(UserEntity(email = "test@test.test", name = "Test User", username = "test1")).id
 
         mockMvc.perform(get("/users/$tempUserId"))
             .andExpect(status().isOk())
             .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Test User"))
     }
 
-    //TODO AJ - Assert response contains a created user.
     @Test
     fun shouldCreateUserWhenRequested() {
         val requestBody = CreateUserDto(
             name = "Test User",
-            email = "test@test.test"
+            email = "test@test.test",
+            username = "test1"
         )
 
         val mvcResult = mockMvc.perform(
@@ -45,15 +45,10 @@ class UserEntityIntegrationTests : IntegrationTestBase() {
                 .content(objectMapper.writeValueAsString(requestBody))
         ).andExpect(status().isOk).andReturn()
 
-
-        // Extract the JSON response as a String
         val jsonResponse = mvcResult.response.contentAsString
 
-
-        // Use ObjectMapper to map the JSON response to UserDto class
         val userDto = objectMapper.readValue(jsonResponse, UserDto::class.java)
 
-        // Optionally, assert some properties of the UserDto
         assertEquals("test@test.test", userDto.email)
         assertEquals("Test User", userDto.name)
     }
