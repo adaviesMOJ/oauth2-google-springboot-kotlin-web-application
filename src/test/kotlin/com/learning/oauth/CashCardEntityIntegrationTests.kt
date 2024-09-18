@@ -1,7 +1,7 @@
 package com.learning.oauth
 
 import com.learning.oauth.dto.cashcard.CashCardDto
-import com.learning.oauth.dto.cashcard.CreateCashCardDto
+import com.learning.oauth.dto.cashcard.CreateCashCardRequestDto
 import com.learning.oauth.entity.CashCardEntity
 import com.learning.oauth.entity.UserEntity
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -35,11 +35,10 @@ class CashCardEntityIntegrationTests : IntegrationTestBase() {
 
     @Test
     fun shouldCreateCashCardWhenRequested() {
-        val tempUsername =  entityDataHelper.createUser(UserEntity(email = "test@test.test", name = "Test User", username = "test1")).username
+        entityDataHelper.createUser(UserEntity(email = "test@test.test", name = "Test User", username = "test1"))
 
-        val requestBody = CreateCashCardDto(
+        val requestBody = CreateCashCardRequestDto(
             amount = 1000,
-            username = tempUsername
         )
 
         mockMvc.perform(
@@ -53,31 +52,11 @@ class CashCardEntityIntegrationTests : IntegrationTestBase() {
     @Test
     fun shouldReturnAllCashCardsForUserWhenRequested() {
         // Given multiple users exist who all have cash cards.
-        val firstUsername =  entityDataHelper.createUser(UserEntity(email = "test@test.test", name = "Test One", username = "test1")).username
-        val secondUsername =  entityDataHelper.createUser(UserEntity(email = "tes2@test.test", name = "Test Two", username = "test2")).username
+        val user1 = entityDataHelper.createUser(UserEntity(email = "test@test.com", name = "Test One", username = "test1"))
+        val user2 = entityDataHelper.createUser(UserEntity(email = "anotherEmail@test.com", name = "Test Two", username = "test2"))
 
-        val firstCashCardRequest = CreateCashCardDto(
-            amount = 1000,
-            username = firstUsername
-        )
-        mockMvc.perform(
-            post("/cashcards")
-                .with(csrf())
-                .contentType(APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(firstCashCardRequest))
-        ).andExpect(status().isOk)
-
-        val secondCashCardRequest = CreateCashCardDto(
-            amount = 150,
-            username = secondUsername
-        )
-
-        mockMvc.perform(
-            post("/cashcards")
-                .with(csrf())
-                .contentType(APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(secondCashCardRequest))
-        ).andExpect(status().isOk)
+        entityDataHelper.createCashCard(CashCardEntity(amount = 1000, user = user1))
+        entityDataHelper.createCashCard(CashCardEntity(amount = 1000, user = user2))
 
         // When I call to get all cash cards.
         val mvcResult = mockMvc.perform(

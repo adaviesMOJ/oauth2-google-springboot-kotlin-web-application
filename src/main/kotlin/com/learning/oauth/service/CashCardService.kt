@@ -1,6 +1,7 @@
 package com.learning.oauth.service
 
 import com.learning.oauth.dto.cashcard.CreateCashCardDto
+import com.learning.oauth.dto.cashcard.CreateCashCardRequestDto
 import com.learning.oauth.entity.CashCardEntity
 import com.learning.oauth.repository.CashCardRepository
 import jakarta.persistence.EntityNotFoundException
