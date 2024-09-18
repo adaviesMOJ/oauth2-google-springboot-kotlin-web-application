@@ -1,6 +1,5 @@
 package com.learning.oauth.entity
 
-import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -11,7 +10,7 @@ import jakarta.persistence.Table
 
 @Entity
 @Table(name = "cashcards")
-class CashCard(
+class CashCardEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
@@ -20,5 +19,5 @@ class CashCard(
 
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
-    val user: User,
+    val user: UserEntity,
 )

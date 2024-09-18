@@ -9,7 +9,7 @@ import jakarta.persistence.Table
 
 @Entity
 @Table(name = "users")
-class User(
+class UserEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
@@ -19,5 +19,5 @@ class User(
     val email: String = "",
 ) {
     @OneToMany(mappedBy = "user")
-    val cashCards: MutableList<CashCard> = mutableListOf()
+    val cashCards: MutableList<CashCardEntity> = mutableListOf()
 }
