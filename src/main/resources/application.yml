@@ -25,12 +25,6 @@ spring:
     password: password
     username: postgres
 
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          public-key-location: classpath:authz.pub
-
 server:
   port: 3939
   servlet:
