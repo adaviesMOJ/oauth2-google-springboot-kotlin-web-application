@@ -1,4 +1,4 @@
--- V1_0__create_user_table.sql
+-- V0_1__create_user_table.sql
 
 CREATE TABLE users
 (

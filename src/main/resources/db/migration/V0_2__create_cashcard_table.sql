@@ -1,4 +1,4 @@
--- V1_2__create_cashcards_table.sql
+-- V0_2__create_cashcards_table.sql
 
 CREATE TABLE cashcards (
     id                      serial          NOT NULL PRIMARY KEY,
