@@ -24,3 +24,18 @@ and generates a default user and password to access endpoints.
 
 It also handles response codes for unauthorised users for many things
 like non-existing endpoints (401 instead of 404) etc...
+
+### Stage 2 - Adding more complex spring security with Bearer Authentication
+By adding the starter-oauth2-resource-server dependency, we tell spring to override 
+the HTTP Basic authentication with Bearer Authentication. We then add configuration 
+to the application.yml to tell spring boot where to authenticate any JWT that is passed in.
+
+As this is early on, we use a public-key-location, but in next stages we'll change this 
+to use a real oauth2 issuer (E.g. Google).
+
+We finally restructured the CashCardController to no longer manually pass in user information 
+and instead we now read it from the SecurityContextHolder using @CurrentSecurityContext and 
+our custom annotation to wrap this code @CurrentOwner.
+
+More reworking of the code has taken place along with these changes, to ensure tables have correct 
+relationships and tests make use of specific WithMockUser to simulate real life usage.
