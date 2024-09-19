@@ -1,6 +1,7 @@
 package com.learning.oauth.service
 
 import com.learning.oauth.dto.cashcard.CreateCashCardDto
+import com.learning.oauth.dto.cashcard.CreateCashCardRequestDto
 import com.learning.oauth.entity.CashCardEntity
 import com.learning.oauth.repository.CashCardRepository
 import jakarta.persistence.EntityNotFoundException
@@ -22,8 +23,12 @@ class CashCardService(
         }
     }
 
+    fun getAllCashCards(username: String): List<CashCardEntity> {
+        return cashCardRepository.findAllCashCardsByUsername(username)
+    }
+
     fun saveCashCard(cashCard: CreateCashCardDto): CashCardEntity {
-        val user = userService.getUser(cashCard.userId)
+        val user = userService.getUserByUsername(cashCard.username)
 
         val cashCardEntity = CashCardEntity(amount = cashCard.amount, user = user)
 

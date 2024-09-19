@@ -33,5 +33,4 @@ class UserController(
     fun getUser(@PathVariable id: Long): UserDto {
         return UserDto(userService.getUser(id))
     }
-
 }

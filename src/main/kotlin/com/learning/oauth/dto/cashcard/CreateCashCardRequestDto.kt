@@ -1,6 +1,5 @@
 package com.learning.oauth.dto.cashcard
 
-data class CreateCashCardDto(
+data class CreateCashCardRequestDto(
     val amount: Long,
-    val username: String,
 )

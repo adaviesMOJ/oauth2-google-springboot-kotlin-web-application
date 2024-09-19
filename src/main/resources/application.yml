@@ -14,7 +14,7 @@ spring:
     show-sql: false
     generate-ddl: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
 
   flyway:
     enabled: true
@@ -24,6 +24,12 @@ spring:
     url: jdbc:postgresql://localhost:5959/learningDb
     password: password
     username: postgres
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          public-key-location: classpath:authz.pub
 
 server:
   port: 3939
@@ -36,4 +42,4 @@ server:
 
 logging:
   level:
-    org.springframework.security: INFO
+    org.springframework.security: TRACE

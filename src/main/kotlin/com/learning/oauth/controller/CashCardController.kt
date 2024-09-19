@@ -1,7 +1,10 @@
 package com.learning.oauth.controller
 
+import com.learning.oauth.annotations.CurrentOwner
 import com.learning.oauth.dto.cashcard.CashCardDto
 import com.learning.oauth.dto.cashcard.CreateCashCardDto
+import com.learning.oauth.dto.cashcard.CreateCashCardRequestDto
+import com.learning.oauth.entity.CashCardEntity
 import com.learning.oauth.service.CashCardService
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
@@ -20,8 +23,17 @@ class CashCardController(
     private val cashCardService: CashCardService,
 ) {
     @PostMapping
-    fun saveCashCard(@RequestBody cashCard: CreateCashCardDto): CashCardDto {
-        return CashCardDto(cashCardService.saveCashCard(cashCard))
+    fun saveCashCard(@RequestBody cashCard: CreateCashCardRequestDto, @CurrentOwner username: String): CashCardDto {
+        val createCashCardDto = CreateCashCardDto(amount = cashCard.amount, username = username)
+        val cashCardEntity = cashCardService.saveCashCard(createCashCardDto)
+
+        return CashCardDto(cashCardEntity)
+    }
+
+    @GetMapping
+    fun getAllCashCardsForUser(@CurrentOwner username: String): List<CashCardDto> {
+        return cashCardService.getAllCashCards(username)
+            .map { cashCard: CashCardEntity -> CashCardDto(cashCard) }
     }
 
     @GetMapping(GET_CASHCARD_BY_ID)

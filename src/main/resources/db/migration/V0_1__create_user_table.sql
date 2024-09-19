@@ -2,7 +2,8 @@
 
 CREATE TABLE users
 (
-    id                      serial          NOT NULL PRIMARY KEY,
+    id                      SERIAL          NOT NULL PRIMARY KEY,
     name                    VARCHAR(80)     NOT NULL,
-    email                   VARCHAR(80)     NOT NULL UNIQUE
+    email                   VARCHAR(80)     NOT NULL UNIQUE,
+    username                VARCHAR(80)     NOT NULL UNIQUE
 );
