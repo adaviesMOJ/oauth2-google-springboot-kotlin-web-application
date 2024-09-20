@@ -6,7 +6,6 @@ import com.learning.oauth.entity.CashCardEntity
 import com.learning.oauth.entity.UserEntity
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.security.test.context.support.WithMockUser
@@ -18,7 +17,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 
 @SpringBootTest
-@AutoConfigureMockMvc
 @WithMockUser(username = "test1")
 class CashCardEntityIntegrationTests : IntegrationTestBase() {
 
