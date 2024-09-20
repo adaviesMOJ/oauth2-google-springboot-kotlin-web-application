@@ -39,3 +39,11 @@ our custom annotation to wrap this code @CurrentOwner.
 
 More reworking of the code has taken place along with these changes, to ensure tables have correct 
 relationships and tests make use of specific WithMockUser to simulate real life usage.
+
+
+## Stage 3 - Adding Google as a login option for users
+We've configured Google to be a working oauth2 client for our service. Users will now be able to registry with our service via Google. When accessing any endpoint in our service, spring will automatically redirect them to Google to login. On successful login our override of the DefaultOAuth2UserService (CustomOAuth2UserService) will capture the oauth2 user and their claims and construct a UserEntity to store in our users table.
+
+The Google client was configured on https://console.cloud.google.com/ by creating a project, then going to API & Services and configuring the project. The outcome is a client_id and client_secret and redirect_url which we plugged into our application.yml.
+
+A rework has also taken place to use the google oauth2 identifier (sub) instead of username, for now this is good enough for this learning project.
