@@ -22,18 +22,18 @@ class CashCardEntityIntegrationTests : IntegrationTestBase() {
 
     @Test
     fun shouldReturnACashCardWhenRequested() {
-        val tempUser =  entityDataHelper.createUser(UserEntity(email = "test@test.test", name = "Test User", username = "test1"))
+        val tempUser =  entityDataHelper.createUser(UserEntity(email = "test@test.test", name = "Test User", oauth2Identifier = "test1"))
         val tempCashCardId =  entityDataHelper.createCashCard(CashCardEntity(amount = 1000, user = tempUser)).id
 
         mockMvc.perform(get("/cashcards/$tempCashCardId"))
             .andExpect(status().isOk())
             .andExpect(MockMvcResultMatchers.jsonPath("$.amount").value(1000))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.username").value("test1"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.oauth2Identifier").value("test1"))
     }
 
     @Test
     fun shouldCreateCashCardWhenRequested() {
-        entityDataHelper.createUser(UserEntity(email = "test@test.test", name = "Test User", username = "test1"))
+        entityDataHelper.createUser(UserEntity(email = "test@test.test", name = "Test User", oauth2Identifier = "test1"))
 
         val requestBody = CreateCashCardRequestDto(
             amount = 1000,
@@ -50,8 +50,8 @@ class CashCardEntityIntegrationTests : IntegrationTestBase() {
     @Test
     fun shouldReturnAllCashCardsForUserWhenRequested() {
         // Given multiple users exist who all have cash cards.
-        val user1 = entityDataHelper.createUser(UserEntity(email = "test@test.com", name = "Test One", username = "test1"))
-        val user2 = entityDataHelper.createUser(UserEntity(email = "anotherEmail@test.com", name = "Test Two", username = "test2"))
+        val user1 = entityDataHelper.createUser(UserEntity(email = "test@test.com", name = "Test One", oauth2Identifier = "test1"))
+        val user2 = entityDataHelper.createUser(UserEntity(email = "anotherEmail@test.com", name = "Test Two", oauth2Identifier = "test2"))
 
         entityDataHelper.createCashCard(CashCardEntity(amount = 1000, user = user1))
         entityDataHelper.createCashCard(CashCardEntity(amount = 1000, user = user2))
@@ -67,6 +67,18 @@ class CashCardEntityIntegrationTests : IntegrationTestBase() {
         val cashCardDtos = objectMapper.readValue(jsonResponse, Array<CashCardDto>::class.java)
 
         assertEquals(cashCardDtos.size, 1)
-        assertEquals(cashCardDtos[0].username, "test1")
+        assertEquals(cashCardDtos[0].oauth2Identifier, "test1")
+    }
+
+    @WithMockUser(username = "test2")
+    @Test
+    fun shouldReturnForbiddenWhenCardBelongsToSomeoneElse() {
+        val user1 = entityDataHelper.createUser(UserEntity(email = "test@test.com", name = "Test One", oauth2Identifier = "test1"))
+        val user2 = entityDataHelper.createUser(UserEntity(email = "anotherEmail@test.com", name = "Test Two", oauth2Identifier = "test2"))
+
+        val user1CashCardId = entityDataHelper.createCashCard(CashCardEntity(amount = 1000, user = user1)).id
+
+        mockMvc.perform(get("/cashcards/$user1CashCardId"))
+            .andExpect(status().isForbidden())
     }
 }

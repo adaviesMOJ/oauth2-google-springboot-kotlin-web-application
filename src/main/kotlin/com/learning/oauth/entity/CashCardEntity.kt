@@ -21,6 +21,6 @@ class CashCardEntity(
     val amount: Long,
 
     @ManyToOne
-    @JoinColumn(name = "username", referencedColumnName = "username", nullable = false)
+    @JoinColumn(name = "oauth2_identifier", referencedColumnName = "oauth2_identifier", nullable = false)
     val user: UserEntity,
 )

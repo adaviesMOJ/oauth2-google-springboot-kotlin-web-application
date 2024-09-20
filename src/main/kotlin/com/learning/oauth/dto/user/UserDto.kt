@@ -6,12 +6,12 @@ data class UserDto(
     val id: Int,
     val name: String,
     val email: String,
-    val username: String,
+    val oauth2Identifier: String,
 ) {
     constructor(userEntity: UserEntity): this(
         id = userEntity.id,
         name = userEntity.name,
         email = userEntity.email,
-        username = userEntity.username,
+        oauth2Identifier = userEntity.oauth2Identifier,
     )
 }

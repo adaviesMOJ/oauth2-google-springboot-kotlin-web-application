@@ -16,16 +16,17 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 
 @SpringBootTest
-@WithMockUser
+@WithMockUser(username = "test1")
 class UserEntityIntegrationTests : IntegrationTestBase() {
 
     @Test
     fun shouldReturnAUserWhenRequested() {
-        val tempUserId =  entityDataHelper.createUser(UserEntity(email = "test@test.test", name = "Test User", username = "test1")).id
+        val user1 =  entityDataHelper.createUser(UserEntity(email = "test@test.test", name = "Test User", oauth2Identifier = "test1"))
+        val user2 =  entityDataHelper.createUser(UserEntity(email = "test2@test2.test", name = "Test Two", oauth2Identifier = "test2"))
 
-        mockMvc.perform(get("/users/$tempUserId"))
+        mockMvc.perform(get("/users/me"))
             .andExpect(status().isOk())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Test User"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.oauth2Identifier").value("test1"))
     }
 
     @Test
@@ -33,7 +34,7 @@ class UserEntityIntegrationTests : IntegrationTestBase() {
         val requestBody = CreateUserDto(
             name = "Test User",
             email = "test@test.test",
-            username = "test1"
+            oauth2Identifier = "test1"
         )
 
         val mvcResult = mockMvc.perform(

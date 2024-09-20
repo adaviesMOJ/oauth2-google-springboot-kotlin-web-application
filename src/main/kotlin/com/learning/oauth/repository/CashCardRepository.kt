@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface CashCardRepository : JpaRepository<CashCardEntity, Long> {
 
-    @Query("SELECT * FROM cashcards c WHERE c.username = :username", nativeQuery = true)
-    fun findAllCashCardsByUsername(username: String): List<CashCardEntity>
+    @Query("SELECT c FROM CashCardEntity c WHERE c.user.oauth2Identifier = :oauth2Identifier")
+    fun findAllCashCardsByOauth2Identifier(oauth2Identifier: String): List<CashCardEntity>
 }
