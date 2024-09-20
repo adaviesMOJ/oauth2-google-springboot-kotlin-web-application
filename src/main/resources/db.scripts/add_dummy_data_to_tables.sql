@@ -1,14 +1,14 @@
 -- add_dummy_data_to_tables.sql
 
 -- Add users
-INSERT INTO users (name, email, username) VALUES
+INSERT INTO users (name, email, oauth2_identifier) VALUES
 ('John Doe', 'john.doe@example.com', 'john1'),
 ('Sarah Doe', 'jane.doe@example.com', 'sarah1'),
 ('Alice Smith', 'alice.smith@example.com', 'alice1'),
 ('Bob Johnson', 'bob.johnson@example.com', 'bob1');
 
 -- Add cashcards
-INSERT INTO cashcards (amount, username) VALUES
+INSERT INTO cashcards (amount, oauth2_identifier) VALUES
 (1000, 'john1'),
 (1500, 'john1'),
 (2000, 'sarah1'),

@@ -13,14 +13,14 @@ class UserService(
     private val userRepository: UserRepository,
 ) {
     fun saveUser(user: CreateUserDto): UserEntity {
-        val userEntity = UserEntity(name = user.name, email = user.email)
+        val userEntity = UserEntity(name = user.name, email = user.email, oauth2Identifier = "test1")
         return userRepository.save(userEntity)
     }
 
-    fun getUserByUsername(username: String): UserEntity {
-        val user = userRepository.findByUsername(username)
+    fun getUserByOauth2Identifier(oauth2Identifier: String): UserEntity {
+        val user = userRepository.findByOauth2Identifier(oauth2Identifier)
         if (!user.isPresent) {
-            throw EntityNotFoundException("User with username $username not found")
+            throw EntityNotFoundException("User with oauth2Identifier $oauth2Identifier not found")
         } else {
             return user.get()
         }

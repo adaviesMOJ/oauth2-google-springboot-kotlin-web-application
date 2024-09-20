@@ -13,15 +13,13 @@ import org.springframework.security.web.SecurityFilterChain
 class SecurityConfig {
 
     @Bean
-    fun appSecurity(http: HttpSecurity, entryPoint: ProblemDetailsAuthenticationEntryPoint): SecurityFilterChain {
+    fun appSecurity(http: HttpSecurity): SecurityFilterChain {
         http
             .authorizeHttpRequests { request ->
                 request.anyRequest().authenticated()
             }
-            .oauth2ResourceServer { oauth2 ->
-                oauth2.authenticationEntryPoint(entryPoint)
-                oauth2.jwt(Customizer.withDefaults())
-            }
+            .oauth2Login(Customizer.withDefaults())
+
         return http.build()
     }
 }

@@ -15,12 +15,12 @@ class UserEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int = 0,
 
-    val name: String = "",
+    val name: String,
 
-    val email: String = "",
+    val email: String,
 
-    @Column(name = "username", unique = true, nullable = false)
-    val username: String = "",
+    @Column(name = "oauth2_identifier", unique = true, nullable = false)
+    val oauth2Identifier: String,
 ) {
     @OneToMany(mappedBy = "user")
     val cashCards: MutableList<CashCardEntity> = mutableListOf()

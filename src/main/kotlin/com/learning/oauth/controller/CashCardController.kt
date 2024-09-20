@@ -24,20 +24,20 @@ class CashCardController(
     private val cashCardService: CashCardService,
 ) {
     @PostMapping
-    fun saveCashCard(@RequestBody cashCard: CreateCashCardRequestDto, @CurrentUser username: String): CashCardDto {
-        val createCashCardDto = CreateCashCardDto(amount = cashCard.amount, username = username)
+    fun saveCashCard(@RequestBody cashCard: CreateCashCardRequestDto, @CurrentUser oauth2Identifier: String): CashCardDto {
+        val createCashCardDto = CreateCashCardDto(amount = cashCard.amount, oauth2Identifier = oauth2Identifier)
         val cashCardEntity = cashCardService.saveCashCard(createCashCardDto)
 
         return CashCardDto(cashCardEntity)
     }
 
     @GetMapping
-    fun getAllCashCardsForUser(@CurrentUser username: String): List<CashCardDto> {
-        return cashCardService.getAllCashCards(username)
+    fun getAllCashCardsForUser(@CurrentUser oauth2Identifier: String): List<CashCardDto> {
+        return cashCardService.getAllCashCards(oauth2Identifier)
             .map { cashCard: CashCardEntity -> CashCardDto(cashCard) }
     }
 
-    @PostAuthorize("returnObject.username == authentication.name")
+    @PostAuthorize("returnObject.oauth2Identifier == authentication.name")
     @GetMapping(GET_CASHCARD_BY_ID)
     fun getCashCard(@PathVariable id: Long): CashCardDto {
         return CashCardDto(cashCardService.getCashCard(id))
