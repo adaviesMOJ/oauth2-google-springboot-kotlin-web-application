@@ -69,4 +69,16 @@ class CashCardEntityIntegrationTests : IntegrationTestBase() {
         assertEquals(cashCardDtos.size, 1)
         assertEquals(cashCardDtos[0].username, "test1")
     }
+
+    @WithMockUser(username = "test2")
+    @Test
+    fun shouldReturnForbiddenWhenCardBelongsToSomeoneElse() {
+        val user1 = entityDataHelper.createUser(UserEntity(email = "test@test.com", name = "Test One", username = "test1"))
+        val user2 = entityDataHelper.createUser(UserEntity(email = "anotherEmail@test.com", name = "Test Two", username = "test2"))
+
+        val user1CashCardId = entityDataHelper.createCashCard(CashCardEntity(amount = 1000, user = user1)).id
+
+        mockMvc.perform(get("/cashcards/$user1CashCardId"))
+            .andExpect(status().isForbidden())
+    }
 }

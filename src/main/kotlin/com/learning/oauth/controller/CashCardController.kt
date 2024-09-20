@@ -1,12 +1,13 @@
 package com.learning.oauth.controller
 
-import com.learning.oauth.annotations.CurrentOwner
+import com.learning.oauth.annotations.CurrentUser
 import com.learning.oauth.dto.cashcard.CashCardDto
 import com.learning.oauth.dto.cashcard.CreateCashCardDto
 import com.learning.oauth.dto.cashcard.CreateCashCardRequestDto
 import com.learning.oauth.entity.CashCardEntity
 import com.learning.oauth.service.CashCardService
 import org.springframework.http.MediaType
+import org.springframework.security.access.prepost.PostAuthorize
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -23,7 +24,7 @@ class CashCardController(
     private val cashCardService: CashCardService,
 ) {
     @PostMapping
-    fun saveCashCard(@RequestBody cashCard: CreateCashCardRequestDto, @CurrentOwner username: String): CashCardDto {
+    fun saveCashCard(@RequestBody cashCard: CreateCashCardRequestDto, @CurrentUser username: String): CashCardDto {
         val createCashCardDto = CreateCashCardDto(amount = cashCard.amount, username = username)
         val cashCardEntity = cashCardService.saveCashCard(createCashCardDto)
 
@@ -31,11 +32,12 @@ class CashCardController(
     }
 
     @GetMapping
-    fun getAllCashCardsForUser(@CurrentOwner username: String): List<CashCardDto> {
+    fun getAllCashCardsForUser(@CurrentUser username: String): List<CashCardDto> {
         return cashCardService.getAllCashCards(username)
             .map { cashCard: CashCardEntity -> CashCardDto(cashCard) }
     }
 
+    @PostAuthorize("returnObject.username == authentication.name")
     @GetMapping(GET_CASHCARD_BY_ID)
     fun getCashCard(@PathVariable id: Long): CashCardDto {
         return CashCardDto(cashCardService.getCashCard(id))

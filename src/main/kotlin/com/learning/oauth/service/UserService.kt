@@ -17,23 +17,10 @@ class UserService(
         return userRepository.save(userEntity)
     }
 
-    fun getAllUsers(): List<UserEntity> {
-        return userRepository.findAll()
-    }
-
-    fun getUser(id: Long): UserEntity {
-        val user = userRepository.findById(id)
-        if (!user.isPresent) {
-            throw EntityNotFoundException("User with id $id not found")
-        } else {
-            return user.get()
-        }
-    }
-
     fun getUserByUsername(username: String): UserEntity {
         val user = userRepository.findByUsername(username)
         if (!user.isPresent) {
-            throw EntityNotFoundException("User with email $username not found")
+            throw EntityNotFoundException("User with username $username not found")
         } else {
             return user.get()
         }
