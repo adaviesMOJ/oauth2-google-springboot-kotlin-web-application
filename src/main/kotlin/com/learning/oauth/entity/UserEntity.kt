@@ -15,9 +15,9 @@ class UserEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int = 0,
 
-    val name: String,
+    var name: String,
 
-    val email: String,
+    var email: String,
 
     @Column(name = "oauth2_identifier", unique = true, nullable = false)
     val oauth2Identifier: String,
