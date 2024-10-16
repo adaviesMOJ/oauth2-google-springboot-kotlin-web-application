@@ -24,7 +24,7 @@ class CashCardController(
     private val cashCardService: CashCardService,
 ) {
     @PostMapping
-    fun saveCashCard(@RequestBody cashCard: CreateCashCardRequestDto, @CurrentUser oauth2Identifier: String): CashCardDto {
+    fun createCashCard(@RequestBody cashCard: CreateCashCardRequestDto, @CurrentUser oauth2Identifier: String): CashCardDto {
         val createCashCardDto = CreateCashCardDto(amount = cashCard.amount, oauth2Identifier = oauth2Identifier)
         val cashCardEntity = cashCardService.saveCashCard(createCashCardDto)
 

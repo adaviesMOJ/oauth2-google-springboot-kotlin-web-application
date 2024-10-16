@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>My Application</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<header th:fragment="header">
+    <h1>Oauth2 Project</h1>
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">Home</a></li>
+            <li>
+                <!-- Use sec:authorize to check if the user is authenticated -->
+                <div sec:authorize="isAuthenticated()">
+                    <a th:href="@{/logout-all}" th:text="'Logout'">Logout</a>
+                </div>
+
+                <!-- This will show if the user is not authenticated -->
+                <div sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/login}" th:text="'Login'">Login</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<div th:fragment="content">
+    <div sec:authorize="isAuthenticated()">
+        <h1 th:text="'Hello, ' + ${#authentication.principal.name} + '!'"></h1>
+    </div>
+</div>
+
+<footer th:fragment="footer">
+    <p>© 2024 My Application</p>
+</footer>
+
+</body>
+</html>

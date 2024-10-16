@@ -20,7 +20,6 @@ const val GET_USER_ME: String = "/me"
 class UserController(
     private val userService: UserService,
 ) {
-    // TODO AJ: How do we create a user and capture their oauth2Identifier from google (Their sub)?
     @PostMapping
     fun saveUser(@RequestBody user: CreateUserDto): UserDto {
         return UserDto(userService.saveUser(user))
