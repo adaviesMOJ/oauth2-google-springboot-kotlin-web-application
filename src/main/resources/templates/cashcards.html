@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Home</title>
+</head>
+<header>
+    <div th:replace="layout :: header"></div>
+</header>
+<body>
+    <div>
+        <h1 th:text="${cashcards}"></h1>
+    </div>
+</body>
+<footer>
+    <div th:replace="layout :: footer"></div>
+</footer>
+</html>
