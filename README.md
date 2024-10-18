@@ -7,7 +7,6 @@ It will contain a fully working RESTful API which utilises the following tech:
 - Spring security (Oauth2)
 - Posgresql database (and flyway to manage migrations)
 - Docker and docker-compose (for building and running locally)
-- more... (eventually correct storing and configuring of env vars, deployment, swagger docs and more)
 
 ## Running Application
 1. run the database container using command 
