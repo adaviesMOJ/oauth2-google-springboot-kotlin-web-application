@@ -47,3 +47,8 @@ We've configured Google to be a working oauth2 client for our service. Users wil
 The Google client was configured on https://console.cloud.google.com/ by creating a project, then going to API & Services and configuring the project. The outcome is a client_id and client_secret and redirect_url which we plugged into our application.yml.
 
 A rework has also taken place to use the google oauth2 identifier (sub) instead of username, for now this is good enough for this learning project.
+
+## Stage 4 - Adding basic UI
+As a final step of this project, a very basic use of Thymeleas has been added to display a conditional navbar depending on the user being authenticated or not.
+
+Next steps? -- Improve error handling, but for now this project has achieved what it set out to do - showcase oauth2 with Google login as an example.
