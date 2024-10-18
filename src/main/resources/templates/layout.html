@@ -16,6 +16,8 @@
                 <!-- Use sec:authorize to check if the user is authenticated -->
                 <div sec:authorize="isAuthenticated()">
                     <a th:href="@{/logout-all}" th:text="'Logout'">Logout</a>
+                    <br>
+                    <a th:href="@{/cashcards}" th:text="'My Cashcards'">My cashcards</a>
                 </div>
 
                 <!-- This will show if the user is not authenticated -->
@@ -27,11 +29,7 @@
     </nav>
 </header>
 
-<div th:fragment="content">
-    <div sec:authorize="isAuthenticated()">
-        <h1 th:text="'Hello, ' + ${#authentication.principal.name} + '!'"></h1>
-    </div>
-</div>
+<div th:fragment="content"></div>
 
 <footer th:fragment="footer">
     <p>© 2024 My Application</p>

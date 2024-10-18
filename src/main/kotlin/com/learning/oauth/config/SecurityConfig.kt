@@ -20,7 +20,7 @@ class SecurityConfig {
     fun appSecurity(http: HttpSecurity): SecurityFilterChain {
         http
             .authorizeHttpRequests { request ->
-                request.requestMatchers("/", "/login", "/error").permitAll()
+                request.requestMatchers("/", "/login", "/error", "/actuator/**").permitAll()
                 .anyRequest().authenticated()
             }
             .oauth2Login { oauth2 ->
